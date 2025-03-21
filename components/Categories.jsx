@@ -1,5 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,19 +6,19 @@ import {
   ScrollView,
   Pressable,
   TextInput,
-  Alert,
   TouchableOpacity,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Products from './Products';
 
 const Categories = () => {
   const [data, setData] = useState([]);
-  const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredData, setFilteredData] = useState([]);
-
+  const navigation = useNavigation();
   const getApiCall = async () => {
     try {
-      const url = 'https://dummyjson.com/products/categories'; // Correct API endpoint
+      const url = 'https://dummyjson.com/products/categories';
       let result = await fetch(url);
       let json = await result.json();
       setData(json);
@@ -34,39 +33,46 @@ const Categories = () => {
   }, []);
 
   useEffect(() => {
-    const results = data.filter((item) =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      
+    const results = data.filter(item =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
     setFilteredData(results);
   }, [searchQuery, data]);
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.searchBar}
-        placeholder="Search here..."
-        value={searchQuery}
-        onChangeText={(text) => setSearchQuery(text)}
-      />
-     <ScrollView style={styles.scrollView}>
-  {filteredData.length > 0 ? (
-    filteredData.map((item) => (
-      <Pressable
-        key={item.slug}
-        style={({ pressed }) => [
-          styles.item,
-          { backgroundColor: pressed ? '#e0e0e0' : '#f9f9f9' },
-        ]}
-      >
-        <Text style={styles.itemText}>{item.name}</Text>
-        {/* Render additional data if needed */}
-      </Pressable>
-    ))
-  ) : (
-    <Text style={styles.noDataText}>No items found</Text>
-  )}
-</ScrollView>
+      <View style={styles.header}>
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search here..."
+          value={searchQuery}
+          onChangeText={text => setSearchQuery(text)}
+        />
+        <TouchableOpacity style={styles.profileIcon} >
+          <Text style={styles.iconText}>👤</Text>
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView style={styles.categoriesContainer}>
+        <View style={styles.categories}>
+          {filteredData.length > 0 ? (
+            filteredData.map(item => (
+              <Pressable
+                key={item.slug}
+                style={({pressed}) => [
+                  styles.categoryItem,
+                  {backgroundColor: pressed ? '#e0e0e0' : '#f9f9f9'},
+                ]}
+                onPress={() => navigation.navigate('Products',{name:item.name})}
+                >
+                <Text style={styles.categoryItemText}>{item.name }</Text>
+              </Pressable>
+            ))
+          ) : (
+            <Text style={styles.noDataText}>No items found</Text>
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -74,29 +80,64 @@ const Categories = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
+    padding: 10,
+    backgroundColor: '#5f9ea0',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
   },
   searchBar: {
+    flex: 1,
     height: 40,
     borderColor: '#ccc',
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 5,
+    marginRight: 10,
     paddingHorizontal: 10,
-    marginBottom: 10,
   },
-  item: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+  profileIcon: {
+    height: 40,
+    width: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
   },
-  itemText: {
+  iconText: {
     fontSize: 18,
+  },
+  categoriesContainer: {
+    flex: 1,
+  },
+  categories: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  categoryItem: {
+    width: '48%',
+    height: 150,
+    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f9f9f9',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  categoryItemText: {
+    fontSize: 16,
+    textAlign: 'center',
   },
   noDataText: {
     textAlign: 'center',
-    color: '#999',
     fontSize: 16,
+    color: '#888',
   },
 });
 

@@ -5,6 +5,8 @@ import Login from './components/Login';
 import Registration from './components/Registration';
 import Home from './components/Home';
 import Categories from './components/Categories';
+import Profile from './components/Profile';
+import Products from './components/Products';
 const Stack = createStackNavigator();
 function App() {
   return (
@@ -29,6 +31,16 @@ function App() {
           name="Categories"
           component={Categories}
           options={{headerShadowVisible: false , headerShown: false}}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{headerShadowVisible: false ,  headerShown: false}}
+        />
+         <Stack.Screen
+          name="Products"
+          component={Products}
+          options={{headerShadowVisible: false ,  headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

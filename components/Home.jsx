@@ -1,26 +1,18 @@
-import {View, Text, TouchableOpacity, StyleSheet, Button,FlatList} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, Button,FlatList, Alert} from 'react-native';
 import Categories from './Categories';
 
-const Home = () => {
+const Home = (props) => {
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.profileIcon}
-        onPress={() => alert('Profile Icon Clicked!')}
-      >
-        <Text style={styles.iconText}>👤</Text>
-      </TouchableOpacity>
 
       <View style={styles.listContainer}>
-        <Categories/>
+        <Categories style={styles.listContainer}/>
       </View>
-    </View>
   );
 };
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5f5',
+        backgroundColor:'#5f9ea0',
         position: 'relative',
       },
   profileIcon: {
@@ -35,7 +27,6 @@ const styles = StyleSheet.create({
     flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
-  },
- 
-});
+    },
+ });
 export default Home;
