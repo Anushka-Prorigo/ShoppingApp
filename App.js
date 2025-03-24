@@ -7,6 +7,8 @@ import Home from './components/Home';
 import Categories from './components/Categories';
 import Profile from './components/Profile';
 import Products from './components/Products';
+import Productdetails from './components/Productdetails';
+import UpdateProductDetails from './components/UpdateProductDetails';
 const Stack = createStackNavigator();
 function App() {
   return (
@@ -41,6 +43,16 @@ function App() {
           name="Products"
           component={Products}
           options={{headerShadowVisible: false ,  headerShown: false}}
+        />
+         <Stack.Screen
+          name="Productdetails"
+          component={Productdetails}
+          options={{headerShadowVisible: false , headerShown: false}}
+        />
+        <Stack.Screen
+          name="UpdateProductDetails"
+          component={UpdateProductDetails}
+          options={{headerShadowVisible: false , headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

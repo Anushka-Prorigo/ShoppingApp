@@ -8,10 +8,11 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Products from './Products';
+import {useNavigation} from '@react-navigation/native';
 
-const Categories = () => {
+const Categories = ({route}) => {
+  const {id} = route.params;
+  console.log(id);
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredData, setFilteredData] = useState([]);
@@ -42,14 +43,19 @@ const Categories = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}>
+          <Text style={styles.arrowText}>{'<'}</Text>
+        </TouchableOpacity>
         <TextInput
           style={styles.searchBar}
           placeholder="Search here..."
           value={searchQuery}
           onChangeText={text => setSearchQuery(text)}
         />
-        <TouchableOpacity style={styles.profileIcon} >
-          <Text style={styles.iconText}>👤</Text>
+        <TouchableOpacity style={styles.profileIcon} onPress={()=>{navigation.navigate('Profile',{id:id})}}>
+          <Text style={styles.iconText}>{'👤'}</Text>
         </TouchableOpacity>
       </View>
 
@@ -63,9 +69,10 @@ const Categories = () => {
                   styles.categoryItem,
                   {backgroundColor: pressed ? '#e0e0e0' : '#f9f9f9'},
                 ]}
-                onPress={() => navigation.navigate('Products',{name:item.name})}
-                >
-                <Text style={styles.categoryItemText}>{item.name }</Text>
+                onPress={() =>
+                  navigation.navigate('Products', {name: item.name})
+                }>
+                <Text style={styles.categoryItemText}> {item.name}</Text>
               </Pressable>
             ))
           ) : (
@@ -138,6 +145,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     color: '#888',
+  },
+  backButton: {
+    marginRight: 10,
+  },
+  arrowText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
   },
 });
 

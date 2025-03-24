@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { Alert, Button, StyleSheet, TextInput, View } from "react-native";
+import { Alert, Button, StyleSheet, TextInput, View } from 'react-native';
 import Home from './Home';
+import Categories from './Categories';
 
 const Login = () => {
     const[email,setEmail] = useState('');
@@ -18,7 +19,8 @@ const Login = () => {
             );
             if(user)
             {
-                navigation.navigate(Home,{id:user.id});
+                console.log(user.id);
+                navigation.navigate('Categories',{id:user.id});
             }
             else{
                 Alert.alert('Error','Invalid user name or password');
